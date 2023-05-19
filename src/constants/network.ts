@@ -21,7 +21,7 @@ export const networks: { [key: string]: Network } = {
 		label: "Filecoin Hyperspace testnet",
 		chainId: "3141",
 		rpcUrls: ["https://filecoin-hyperspace.chainstacklabs.com/rpc/v1"],
-        contractAddress: '0x288699Cd2F9b569476ebA080dD85C758884Cb1c3'
+        contractAddress: '0x81bF7Bf5F60a700B5C5DC009379e33DD13A5abeB'
 	},
     "5001": {
         image: '/network-5001.svg',

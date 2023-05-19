@@ -20,13 +20,16 @@ import NetworkProvider, { NetworkContext } from "./contexts/network";
 import { useContext, useEffect, useState } from "react";
 import PageContextProvider, { PageContext } from "./contexts/page";
 import AppNotification from "./components/AppNotification";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "./state/store";
 import { useDispatch } from "react-redux";
-import { SET_USER_DATA } from "./state/reducer/userData";
 import { SET_LOADING, SET_NOTIF } from "./state/reducer/globalState";
 import OverlayLoader from "./components/OverlayLoader";
 import Upload from "./pages/upload";
+import { ToastContainer, toast } from "react-toastify";
+import { SET_MYUPLOADS, UNSET_MYUPLOADS, UserData } from "./state/reducer/userData";
+import { transformUserData } from "./util/transformer";
+import UploadDetail from "./pages/uploadDetail";
 
 function App() {
 	const { theme, toggleColorMode } = useMode();
@@ -68,6 +71,7 @@ function App() {
 							</AuthProvider>
 						</NetworkProvider>
 					</ProSidebarProvider>
+					<ToastContainer theme={theme.palette.mode} />
 				</Provider>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
@@ -81,41 +85,23 @@ const Main = () => {
 	const navigate = useNavigate();
 	const { path1 } = useParams();
 	const dispatch = useDispatch();
-	const { userDataQuery, setUserDataQuery } = useContext(PageContext);
+	const { setUserDataQuery } = useContext(PageContext);
+	const initLoaded = useSelector(
+		(state: any) => (state.userData as UserData).loaded
+	);
 
 	useEffect(() => {
 		if (!account?.code) {
 			setContract(undefined);
 			setWallet(undefined);
 			dispatch({
-				type: SET_USER_DATA,
-				payload: {
-					courses: [],
-					progressStatus: {},
-				},
+				type: UNSET_MYUPLOADS,
+				payload: {},
 			});
 			navigate("/login");
 			return;
 		}
 	}, [account]);
-
-	useEffect(() => {
-		if (userDataQuery.loading) {
-			dispatch({
-				type: SET_LOADING,
-				payload: {
-					loading: true,
-				},
-			});
-		} else {
-			dispatch({
-				type: SET_LOADING,
-				payload: {
-					loading: false,
-				},
-			});
-		}
-	}, [userDataQuery]);
 
 	const onUserDataCallFailure = (error: any) => {
 		dispatch({
@@ -127,6 +113,29 @@ const Main = () => {
 		});
 		setUserDataQuery({ loading: false });
 	};
+
+	useEffect(() => {
+		if (initLoaded) return;
+        setUserDataQuery({ loading: true });
+		contract?.methods
+			.returnData()
+			.call()
+			.then((data: any) => {
+                console.log(data)
+				dispatch({
+                    type: SET_MYUPLOADS,
+                    payload: {
+                        myuploads: transformUserData(data)
+                    }
+                })
+				setUserDataQuery({ loading: false });
+			})
+			.catch((error: any) => {
+				console.log(error);
+				toast.error(error.message);
+				setUserDataQuery({ loading: false });
+			});
+	}, [contract]);
 
 	return (
 		<main className="content">
@@ -141,6 +150,8 @@ const Main = () => {
 						<HomePage />
 					) : path1 === "more" ? (
 						<HomePage />
+					) : path1 === "upload-detail" ? (
+						<UploadDetail />
 					) : path1 === "notfound" ? (
 						<div>Not found</div>
 					) : (

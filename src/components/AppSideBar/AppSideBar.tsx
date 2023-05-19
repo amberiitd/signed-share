@@ -26,6 +26,7 @@ import { tokens } from "../../contexts/theme";
 import { NetworkContext } from "../../contexts/network";
 import { networks } from "../../constants/network";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
+import { PageContext } from "../../contexts/page";
 
 const AppSideBarContext = createContext<{
 	selected: string;
@@ -39,10 +40,12 @@ const Item: FC<{
 }> = ({ title, to, icon }) => {
 	const navigate = useNavigate();
 	const { selected, setSelected } = useContext(AppSideBarContext);
+    const { navigationOff } = useContext(PageContext);
 	const theme: any = useTheme();
 	const colors = tokens(theme.palette.mode);
 	return (
 		<MenuItem
+            disabled={!!navigationOff}
 			active={to.startsWith(`/${selected}`)}
 			style={{
 				color: colors.grey[100],

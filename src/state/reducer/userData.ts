@@ -7,31 +7,23 @@ interface AppNotification {
 }
 
 export interface UserData {
-	courses: string[];
-	progressStatus: { [key: string]: any };
+	myuploads: any[];
+    loaded: boolean;
 }
 
 export interface UserDataActionPayload {
-	courseId?: string;
-	moduleId?: string;
-	lectureId?: string;
-	status?: "not_yet_started" | "in_progress" | "completed";
-	completedDuration?: { minute: number; second: number };
-	courses?: string[];
-	progressStatus?: any;
-    score?: {points: number, total: number}
+	newupload?: string;
+    myuploads?: any[];
 }
 
 const initialState: UserData = {
-	courses: [],
-	progressStatus: {},
+	myuploads: [],
+    loaded: false
 };
 
-export const UPDATE_LECTURE_STATUS = "update_lecture_status";
-export const SET_USER_DATA = "set_use_data";
-export const ADD_COURSE = "add_course";
-export const COMPLETE_MODULE = "complete_module";
-export const UPDATE_QUIZ_SCORE = "update_quiz_score";
+export const ADD_TO_MYUPLOADS = "add_to_myuploads";
+export const SET_MYUPLOADS = "set_myuploads";
+export const UNSET_MYUPLOADS = "unset_myuploads";
 
 const userDataReducer: (
 	state: UserData,
@@ -41,73 +33,23 @@ const userDataReducer: (
 	action: { type: string; payload: UserDataActionPayload }
 ) => {
 	switch (action.type) {
-		case UPDATE_LECTURE_STATUS:
-			if (
-				action.payload.courseId !== undefined &&
-				action.payload.moduleId !== undefined &&
-				action.payload.lectureId !== undefined
-			) {
-				let courseProgress =
-					state.progressStatus[action.payload.courseId] || {};
-				let module = courseProgress[action.payload.moduleId] || {};
-				let lecture = courseProgress[action.payload.lectureId] || {};
-				lecture = {
-					...lecture,
-					status: action.payload.status,
-					completedDuration: action.payload.completedDuration,
-				};
-				module[action.payload.lectureId] = lecture;
-				courseProgress[action.payload.moduleId] = module;
-				state.progressStatus[action.payload.courseId] = courseProgress;
-				return { ...state };
-			}
-			return state;
-		case SET_USER_DATA:
+		case ADD_TO_MYUPLOADS:
 			return {
 				...state,
-				courses: action.payload.courses || state.courses,
-				progressStatus:
-					{...state.progressStatus, ...(action.payload.progressStatus || state.progressStatus)},
+				myuploads: [action.payload.newupload, ...state.myuploads],
 			};
-		case ADD_COURSE:
-			return {
-				...state,
-				courses: [...state.courses, ...(action.payload.courses || [])],
-			};
-		case COMPLETE_MODULE:
-            if (
-				action.payload.courseId !== undefined &&
-				action.payload.moduleId !== undefined
-			) {
-				let courseProgress =
-					state.progressStatus[action.payload.courseId] || {};
-				let module = courseProgress[action.payload.moduleId] || {};
-                module.completed = true;
-				courseProgress[action.payload.moduleId] = module;
-				state.progressStatus[action.payload.courseId] = courseProgress;
-				return { ...state };
-			}
-			return {
-				...state,
-				courses: state.courses.concat(action.payload.courses || []),
-			};
-        case UPDATE_QUIZ_SCORE:
-            if (
-                action.payload.courseId !== undefined &&
-                action.payload.moduleId !== undefined
-            ) {
-                let courseProgress =
-                    state.progressStatus[action.payload.courseId] || {};
-                let module = courseProgress[action.payload.moduleId] || {};
-                module.score = action.payload.score;
-                courseProgress[action.payload.moduleId] = module;
-                state.progressStatus[action.payload.courseId] = courseProgress;
-                return { ...state };
-            }
+        case SET_MYUPLOADS: 
             return {
                 ...state,
-                courses: state.courses.concat(action.payload.courses || []),
-            };
+                myuploads: action.payload.myuploads || [],
+                loaded: true
+            }
+        case UNSET_MYUPLOADS:
+            return {
+                ...state,
+                myuploads:  [],
+                loading: false
+            }
 		default:
 			return state;
 	}

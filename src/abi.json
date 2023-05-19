@@ -26,6 +26,78 @@
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "_cid",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lastModified",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_fileName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_sizeInKB",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_fileType",
+				"type": "string"
+			}
+		],
+		"name": "registerCID",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "CIDMappedData",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lastModified",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "fileName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "sizeInKB",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "fileType",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -45,8 +117,23 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "timestamp",
+				"name": "lastModified",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "fileName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "sizeInKB",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "fileType",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -84,9 +171,42 @@
 				"type": "string"
 			}
 		],
-		"name": "registerCID",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "returnCIDMappedData",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastModified",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "fileName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sizeInKB",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "fileType",
+						"type": "string"
+					}
+				],
+				"internalType": "struct CIDRegistration.CIDContent",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -102,13 +222,68 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "timestamp",
+						"name": "lastModified",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "fileName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sizeInKB",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "fileType",
+						"type": "string"
 					}
 				],
 				"internalType": "struct CIDRegistration.entryContent[][]",
 				"name": "",
 				"type": "tuple[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "returnIndividualUploaderData",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "CID",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastModified",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "fileName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "sizeInKB",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "fileType",
+						"type": "string"
+					}
+				],
+				"internalType": "struct CIDRegistration.entryContent[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
