@@ -38,7 +38,7 @@ const LoginPage: FC = () => {
 						marginBottom={3}
 					>
 						<img
-							src={`${process.env.PUBLIC_URL}/asset/app-icon.png`}
+							src={`${process.env.PUBLIC_URL}/asset/SignedShare.png`}
 							height="60px"
 							width="60px"
 						/>

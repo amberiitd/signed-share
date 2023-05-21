@@ -77,6 +77,11 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
 				"internalType": "string",
 				"name": "fileName",
 				"type": "string"
@@ -121,6 +126,11 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
 				"internalType": "string",
 				"name": "fileName",
 				"type": "string"
@@ -134,6 +144,11 @@
 				"internalType": "string",
 				"name": "fileType",
 				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "uploader",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -186,6 +201,11 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "fileName",
 						"type": "string"
@@ -226,6 +246,11 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "fileName",
 						"type": "string"
@@ -239,6 +264,11 @@
 						"internalType": "string",
 						"name": "fileType",
 						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "uploader",
+						"type": "address"
 					}
 				],
 				"internalType": "struct CIDRegistration.entryContent[][]",
@@ -266,6 +296,11 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
 						"internalType": "string",
 						"name": "fileName",
 						"type": "string"
@@ -279,6 +314,11 @@
 						"internalType": "string",
 						"name": "fileType",
 						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "uploader",
+						"type": "address"
 					}
 				],
 				"internalType": "struct CIDRegistration.entryContent[]",

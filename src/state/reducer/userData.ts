@@ -8,21 +8,27 @@ interface AppNotification {
 
 export interface UserData {
 	myuploads: any[];
-    loaded: boolean;
+	alluploads: any[];
+	myuploadsloaded: boolean;
+    alluploadsloaded: boolean;
 }
 
 export interface UserDataActionPayload {
 	newupload?: string;
-    myuploads?: any[];
+	myuploads?: any[];
+    alluploads?: any[];
 }
 
 const initialState: UserData = {
 	myuploads: [],
-    loaded: false
+	alluploads: [],
+	myuploadsloaded: false,
+    alluploadsloaded: false,
 };
 
 export const ADD_TO_MYUPLOADS = "add_to_myuploads";
 export const SET_MYUPLOADS = "set_myuploads";
+export const SET_ALLUPLOADS = "set_alluploads";
 export const UNSET_MYUPLOADS = "unset_myuploads";
 
 const userDataReducer: (
@@ -38,18 +44,24 @@ const userDataReducer: (
 				...state,
 				myuploads: [action.payload.newupload, ...state.myuploads],
 			};
-        case SET_MYUPLOADS: 
-            return {
-                ...state,
-                myuploads: action.payload.myuploads || [],
-                loaded: true
-            }
-        case UNSET_MYUPLOADS:
-            return {
-                ...state,
-                myuploads:  [],
-                loading: false
-            }
+		case SET_MYUPLOADS:
+			return {
+				...state,
+				myuploads: action.payload.myuploads || [],
+				myuploadsloaded: true,
+			};
+		case SET_ALLUPLOADS:
+			return {
+				...state,
+				alluploads: action.payload.alluploads || [],
+				alluploadsloaded: true,
+			};
+		case UNSET_MYUPLOADS:
+			return {
+				...state,
+				myuploads: [],
+				myuploadsloaded: false,
+			};
 		default:
 			return state;
 	}

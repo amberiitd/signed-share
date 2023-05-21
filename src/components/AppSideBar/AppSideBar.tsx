@@ -40,12 +40,12 @@ const Item: FC<{
 }> = ({ title, to, icon }) => {
 	const navigate = useNavigate();
 	const { selected, setSelected } = useContext(AppSideBarContext);
-    const { navigationOff } = useContext(PageContext);
+	const { navigationOff } = useContext(PageContext);
 	const theme: any = useTheme();
 	const colors = tokens(theme.palette.mode);
 	return (
 		<MenuItem
-            disabled={!!navigationOff}
+			disabled={!!navigationOff}
 			active={to.startsWith(`/${selected}`)}
 			style={{
 				color: colors.grey[100],
@@ -104,7 +104,7 @@ const AppSideBar: FC = () => {
 						backgroundColor: colors.primary[400],
 					},
 					borderColor: colors.primary[900],
-					height: '100vh',
+					height: "100vh",
 					position: "sticky",
 					top: 0,
 				}}
@@ -153,7 +153,7 @@ const AppSideBar: FC = () => {
 									}}
 								>
 									<img
-										src={`${process.env.PUBLIC_URL}/asset/app-icon.png`}
+										src={`${process.env.PUBLIC_URL}/asset/SignedShare.png`}
 										height="20px"
 										width="20px"
 									/>
@@ -179,9 +179,9 @@ const AppSideBar: FC = () => {
 					</MenuItem>
 					<Box>
 						<Item
-							title="Share"
-							to="/share"
-							icon={<GridViewOutlinedIcon />}
+							title="Uploads"
+							to="/uploads"
+							icon={<TimelineOutlinedIcon />}
 						/>
 
 						<Typography
@@ -198,10 +198,11 @@ const AppSideBar: FC = () => {
 							to="/mycourses"
 							icon={<MenuBookOutlinedIcon />}
 						/> */}
+
 						<Item
-							title="Uploads"
-							to="/uploads"
-							icon={<TimelineOutlinedIcon />}
+							title="Share"
+							to="/share"
+							icon={<GridViewOutlinedIcon />}
 						/>
 						<Item
 							title="More"
@@ -214,7 +215,7 @@ const AppSideBar: FC = () => {
 							padding={2}
 							display="flex"
 							flexWrap={"wrap"}
-                            alignItems='center'
+							alignItems="center"
 						>
 							{/* {!collapsed && (
 								<Typography>Connected to network:</Typography>
@@ -222,8 +223,8 @@ const AppSideBar: FC = () => {
 							<Typography
 								fontWeight={645}
 								color={colors.greenAccent[400]}
-                                marginRight={1}
-                                // className='text-cut'
+								marginRight={1}
+								// className='text-cut'
 							>
 								{selectedNetworkId
 									? networks[selectedNetworkId].label
@@ -233,10 +234,10 @@ const AppSideBar: FC = () => {
 								title="Change network"
 								sx={{
 									marginLeft: "auto",
-                                    marginRight: '5px',
+									marginRight: "5px",
 									backgroundColor: colors.primary[900],
 								}}
-                                onClick={() => setNetworkOption(true)}
+								onClick={() => setNetworkOption(true)}
 							>
 								<ToggleOnIcon />
 							</IconButton>

@@ -30,6 +30,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { SET_MYUPLOADS, UNSET_MYUPLOADS, UserData } from "./state/reducer/userData";
 import { transformUserData } from "./util/transformer";
 import UploadDetail from "./pages/uploadDetail";
+import GlobalUploads from "./pages/globalUploads";
 
 function App() {
 	const { theme, toggleColorMode } = useMode();
@@ -80,15 +81,12 @@ function App() {
 
 const Main = () => {
 	const { account } = useContext(AuthContext);
-	const { contract, wallet, setContract, setWallet } =
+	const { setContract, setWallet } =
 		useContext(NetworkContext);
 	const navigate = useNavigate();
 	const { path1 } = useParams();
 	const dispatch = useDispatch();
 	const { setUserDataQuery } = useContext(PageContext);
-	const initLoaded = useSelector(
-		(state: any) => (state.userData as UserData).loaded
-	);
 
 	useEffect(() => {
 		if (!account?.code) {
@@ -114,29 +112,6 @@ const Main = () => {
 		setUserDataQuery({ loading: false });
 	};
 
-	useEffect(() => {
-		if (initLoaded) return;
-        setUserDataQuery({ loading: true });
-		contract?.methods
-			.returnData()
-			.call()
-			.then((data: any) => {
-                console.log(data)
-				dispatch({
-                    type: SET_MYUPLOADS,
-                    payload: {
-                        myuploads: transformUserData(data)
-                    }
-                })
-				setUserDataQuery({ loading: false });
-			})
-			.catch((error: any) => {
-				console.log(error);
-				toast.error(error.message);
-				setUserDataQuery({ loading: false });
-			});
-	}, [contract]);
-
 	return (
 		<main className="content">
 			<AppNavBar search profile />
@@ -146,8 +121,8 @@ const Main = () => {
 						<HomePage />
 					) : path1 === "share" ? (
 						<Upload />
-					) : path1 === "progress" ? (
-						<HomePage />
+					) : path1 === "uploads" ? (
+						<GlobalUploads />
 					) : path1 === "more" ? (
 						<HomePage />
 					) : path1 === "upload-detail" ? (
