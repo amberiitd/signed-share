@@ -107,6 +107,8 @@ const AppSideBar: FC = () => {
 					height: "100vh",
 					position: "sticky",
 					top: 0,
+                    left: 0,
+                    zIndex: 12
 				}}
 			>
 				<Menu

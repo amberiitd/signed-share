@@ -271,7 +271,10 @@ const Upload: FC = () => {
 
 export default Upload;
 
-const RowRender: FC<{ row: any }> = ({ row }) => {
+const RowRender: FC<{ row: any; showOwner?: boolean }> = ({
+	row,
+	showOwner,
+}) => {
 	const theme: any = useTheme();
 	const colors = useMemo(() => tokens(theme.palette.mode), [theme]);
 	const [hovered, setHovered] = useState(false);
@@ -316,11 +319,25 @@ const RowRender: FC<{ row: any }> = ({ row }) => {
 			</TableCell>
 			<TableCell align="right">{row.size} kb</TableCell>
 			<TableCell align="right">{row.type}</TableCell>
+			{showOwner && (
+				<TableCell align="right">
+					<Link
+						href={`https://filfox.info/en/address/${row.user}`}
+						color="inherit"
+						target="_blank"
+					>
+						{row.user}
+					</Link>
+				</TableCell>
+			)}
 		</TableRow>
 	);
 };
 
-export const UploadTable: FC<{ dataList: any[] }> = ({ dataList }) => {
+export const UploadTable: FC<{ dataList: any[]; showOwner?: boolean }> = ({
+	dataList,
+	showOwner,
+}) => {
 	const theme: any = useTheme();
 	const colors = useMemo(() => tokens(theme.palette.mode), [theme]);
 	const { debouncedSearchText } = useContext(PageContext);
@@ -337,7 +354,7 @@ export const UploadTable: FC<{ dataList: any[] }> = ({ dataList }) => {
 	return (
 		<TableContainer
 			component={Paper}
-			sx={{ marginTop: 3, backgroundColor: colors.primary[400] }}
+			sx={{ marginTop: 3, backgroundColor: colors.primary[400]}}
 		>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
@@ -355,11 +372,20 @@ export const UploadTable: FC<{ dataList: any[] }> = ({ dataList }) => {
 						<TableCell align="right" sx={{ fontWeight: 600 }}>
 							Type
 						</TableCell>
+						{showOwner && (
+							<TableCell align="right" sx={{ fontWeight: 600 }}>
+								Owner
+							</TableCell>
+						)}
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{filteredUpload.map((row, index) => (
-						<RowRender key={row.name + index} row={row} />
+						<RowRender
+							key={row.name + index}
+							row={row}
+							showOwner={showOwner}
+						/>
 					))}
 				</TableBody>
 			</Table>

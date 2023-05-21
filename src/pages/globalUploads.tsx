@@ -64,7 +64,7 @@ const GlobalUploads: FC = () => {
 					subtitle="Here you can view all uploads by people all around the globe."
 				/>
 			</Box>
-			<UploadTable dataList={alluploads} />
+			<UploadTable dataList={alluploads} showOwner/>
 		</Box>
 	);
 };
